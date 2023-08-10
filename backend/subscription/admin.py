@@ -1,3 +1,3 @@
 from django.contrib import admin
-
-# Register your models here.
+from subscription.models import Plan, PlanFeature, Subscription
+from django.utils.translation import gettext_lazy as _

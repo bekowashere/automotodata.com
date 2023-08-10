@@ -14,6 +14,24 @@ class Plan(models.Model):
         decimal_places=2
     )
 
+    # Subscription
+    @property
+    def total_subscriptions_count(self):
+        return self.plan_subscriptions.all().count()
+    
+    @property
+    def total_subscriptions(self):
+        return self.plan_subscriptions.all()
+    
+    # PlanFeature
+    @property
+    def total_features_count(self):
+        return self.features.all().count
+    
+    @property
+    def total_features(self):
+        return self.features.all()
+
     def __str__(self) -> str:
         return self.name
     

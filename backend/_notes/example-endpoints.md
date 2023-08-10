@@ -1,0 +1,6 @@
+- **/v1/auto**
+    - BrandList
+- **/v1/auto?name=query**
+    - example: /v1/auto?name=bmw
+- **/v1/auto/:str**
+    - *str*: brand_slug -> bmw

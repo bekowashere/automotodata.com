@@ -10,3 +10,7 @@
     - auto/  
     - auto/bmw
     - auto/
+
+
+- Subscription:
+    - 15 günlük deneme olacak mı mesela?

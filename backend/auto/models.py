@@ -4,8 +4,34 @@ from django.core.validators import FileExtensionValidator
 
 # class BodyStyle
 # class FuelType
-# class Infotainment
+class BodyStyle(models.Model):
+    name = models.CharField(_('Body Style'), max_length=32)
+    note = models.CharField(
+        _('Extra Note'),
+        max_length=255,
+        help_text='(spider/spyder, cabrio/cabriolet, drop/open/soft top)',
+        null=True,
+        blank=True
+    )
 
+    def __str__(self) -> str:
+        return self.name
+    
+    class Meta:
+        verbose_name = _('Body Style')
+        verbose_name_plural = _('Body Styles')
+
+class FuelType(models.Model):
+    name = models.CharField(_('Fuel Type'), max_length=32)
+
+    def __str__(self) -> str:
+        return self.name
+    
+    class Meta:
+        verbose_name = _('Fuel Type')
+        verbose_name_plural = _('Fuel Types')
+
+# class Infotainment
 # class DriveType
 # class GearBox
 
@@ -29,6 +55,29 @@ class AutoBrand(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+    @property
+    def get_total_series_count(self):
+        """Number of total series"""
+        return self.brand_series.all().count()
+
+    @property
+    def get_continued_series_count(self):
+        """Number of continued series"""
+        return self.brand_series.filter(is_discontinued=False).count()
+
+    @property
+    def get_discontinued_series_count(self):
+        """Number of discontinued series"""
+        return self.brand_series.filter(is_discontinued=True).count()
+
+    @property
+    def get_continued_series(self):
+        return self.brand_series.filter(is_discontinued=False)
+    
+    @property
+    def get_discontinued_series(self):
+        return self.brand_series.filter(is_discontinued=True)
     
     class Meta:
         verbose_name = _('Auto Brand')
@@ -55,8 +104,19 @@ class AutoSeries(models.Model):
         validators=[FileExtensionValidator(['png', 'jpg', 'jpeg'])]
     )
 
-    # FK BodyStyle
-    # M2M FuelType
+    # Spec. Relations
+    body_style = models.ForeignKey(
+        BodyStyle,
+        on_delete=models.SET_NULL,
+        verbose_name=_('Body Style'),
+        null=True,
+        blank=True
+    )
+    fuel_type = models.ManyToManyField(
+        FuelType,
+        verbose_name=_('Fuel Type'),
+        blank=True
+    )
 
     is_discontinued = models.BooleanField(_('Discontinued Series'), default=False)
 

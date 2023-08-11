@@ -4,7 +4,9 @@ from auto.models import (
     AutoBrand,
     AutoSeries,
     AutoModel,
-    AutoModelImage
+    AutoModelImage,
+    BodyStyle,
+    FuelType
 )
 
 @admin.register(AutoBrand)
@@ -23,6 +25,7 @@ class AutoSeriesAdmin(admin.ModelAdmin):
     fieldsets = (
         (_('Relationship'), {'fields': ('brand',)}),
         (_('Information'), {'fields': ('name', 'slug', 'image', 'is_discontinued')}),
+        (_('Specifications'), {'fields': ('body_style', 'fuel_type')}),
         (_('Sources'), {'fields': ('source_generation_count', 'source_image_path', 'source_image_url', 'source_detail_url')})
     )
     list_display = ('name', 'slug', 'brand')

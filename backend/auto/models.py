@@ -133,6 +133,10 @@ class AutoSeries(models.Model):
     def __str__(self) -> str:
         return self.name
     
+    @property
+    def get_models_count(self):
+        return self.series_models.all().count()
+    
     class Meta:
         verbose_name = _('Auto Series')
         verbose_name_plural = _('Auto Series')

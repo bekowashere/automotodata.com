@@ -24,7 +24,8 @@ from rest_framework.generics import (
 from rest_framework.permissions import IsAuthenticated
 
 from auto.api.serializers import (
-    AutoBrandListSerializer
+    AutoBrandListSerializer,
+    AutoBrandDetailSerializer
 )
 
 from auto.models import (
@@ -40,3 +41,8 @@ class AutoBrandListAPIView(ListAPIView):
 
     queryset = AutoBrand.objects.all()
     serializer_class = AutoBrandListSerializer
+
+class AutoBrandDetailAPIView(RetrieveAPIView):
+    queryset = AutoBrand.objects.all()
+    serializer_class = AutoBrandDetailSerializer
+    lookup_field = 'slug'

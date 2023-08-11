@@ -44,7 +44,7 @@ class AutoModelAdmin(admin.ModelAdmin):
 @admin.register(AutoModelImage)
 class AutoModelImageAdmin(admin.ModelAdmin):
     fieldsets = (
-        (_('Relationship'), {'fields': ('model')}),
+        (_('Relationship'), {'fields': ('model',)}),
         (_('Information'), {'fields': ('image_url', 'alt_text')}),
     )
     list_display = ('model', 'image_url')

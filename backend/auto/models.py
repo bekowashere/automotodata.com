@@ -23,7 +23,7 @@ class AutoBrand(models.Model):
     description = models.TextField(_('Description'), null=True, blank=True)
 
     # Source
-    source_image_path = models.CharField(_('Source Image Path'), null=True, blank=True)
+    source_image_path = models.CharField(_('Source Image Path'), max_length=64, null=True, blank=True)
     source_image_url = models.URLField(_('Source Image URL') ,null=True, blank=True)
     source_detail_url = models.URLField(_('Source Detail URL') ,null=True, blank=True)
 
@@ -66,7 +66,7 @@ class AutoSeries(models.Model):
         null=True,
         blank=True
     )
-    source_image_path = models.CharField(_('Source Image Path'), null=True, blank=True)
+    source_image_path = models.CharField(_('Source Image Path'), max_length=64, null=True, blank=True)
     source_image_url = models.URLField(_('Source Image URL') ,null=True, blank=True)
     source_detail_url = models.URLField(_('Source Detail URL') ,null=True, blank=True)
 
@@ -74,8 +74,8 @@ class AutoSeries(models.Model):
         return self.name
     
     class Meta:
-        verbose_name = _('Series')
-        verbose_name_plural = _('Series')
+        verbose_name = _('Auto Series')
+        verbose_name_plural = _('Auto Series')
 
 def upload_model_image(instance, filename):
     filebase, extension = filename.rsplit('.', 1)
@@ -97,7 +97,7 @@ class AutoModel(models.Model):
     )
 
     # Main
-    name = models.CharField(_('Series Name'), max_length=64)
+    name = models.CharField(_('Model Name'), max_length=64)
     slug = models.SlugField(_('Slug'))
     image = models.ImageField(
         upload_to=upload_model_image,
@@ -119,6 +119,13 @@ class AutoModel(models.Model):
     source_image_url = models.URLField(_('Source Image URL') ,null=True, blank=True)
     source_detail_url = models.URLField(_('Source Detail URL') ,null=True, blank=True)
 
+    def __str__(self) -> str:
+        return self.name
+    
+    class Meta:
+        verbose_name = _('Auto Model')
+        verbose_name_plural = _('Auto Models')
+
 class AutoModelImage(models.Model):
     model = models.ForeignKey(
         AutoBrand,
@@ -128,11 +135,11 @@ class AutoModelImage(models.Model):
     )
 
     image_url = models.URLField(_('Image URL'))
-    alt_text = models.CharField(_('Image Alt Text'), null=True, blank=True)
+    alt_text = models.CharField(_('Image Alt Text'), max_length=64, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.model.name
     
     class Meta:
-        verbose_nmae = _('Model Image')
-        verbose_nmae_plural = _('Model Images')
+        verbose_name = _('Model Image')
+        verbose_name_plural = _('Model Images')
